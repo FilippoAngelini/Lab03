@@ -22,7 +22,7 @@
    <center>
       <VBox BorderPane.alignment="CENTER">
          <children>
-            <HBox>
+            <HBox alignment="CENTER_LEFT">
                <children>
                   <Label text="Choose the language:" />
                   <ComboBox prefHeight="31.0" prefWidth="126.0">
