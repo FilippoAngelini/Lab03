@@ -85,6 +85,9 @@ public class Model {
 		
 		Collections.sort(dictionary);
 		
+		int inizio = 0;
+		int fine = dictionary.size() - 1;
+		
 		/*
 		for(int i = 0 ; i < testo.length() ; i++)
 			while(j== 0 || j==dictionary.size()-1)
