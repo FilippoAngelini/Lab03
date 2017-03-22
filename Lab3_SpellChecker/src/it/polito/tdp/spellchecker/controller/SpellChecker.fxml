@@ -10,8 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<BorderPane prefHeight="514.0" prefWidth="536.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.111" fx:controller="it.polito.tdp.spellchecker.controller.SpellCheckerController">
+<BorderPane prefHeight="514.0" prefWidth="536.0" xmlns="http://javafx.com/javafx/8.0.102" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polito.tdp.spellchecker.controller.SpellCheckerController">
    <top>
       <Label text="Lab03_SpellChecker" BorderPane.alignment="CENTER">
          <font>
@@ -25,7 +24,7 @@
             <HBox alignment="CENTER_LEFT">
                <children>
                   <Label text="Choose the language:" />
-                  <ComboBox prefHeight="31.0" prefWidth="126.0">
+                  <ComboBox fx:id="cmbLanguage" prefHeight="25.0" prefWidth="101.0">
                      <HBox.margin>
                         <Insets left="10.0" />
                      </HBox.margin>
@@ -35,14 +34,14 @@
                   <Insets top="10.0" />
                </VBox.margin>
             </HBox>
-            <TextArea>
+            <TextArea fx:id="txtInsert">
                <VBox.margin>
                   <Insets top="20.0" />
                </VBox.margin>
             </TextArea>
             <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Button mnemonicParsing="false" text="Spell Check" />
+                  <Button fx:id="btnCheck" mnemonicParsing="false" onAction="#doCheck" text="Spell Check" />
                </children>
                <VBox.margin>
                   <Insets bottom="15.0" top="25.0" />
@@ -53,17 +52,17 @@
                   <Insets bottom="10.0" />
                </VBox.margin>
             </Label>
-            <TextArea />
+            <TextArea fx:id="txtResult" editable="false" />
             <HBox alignment="CENTER_RIGHT" spacing="15.0">
                <children>
-                  <Label text="The text contains # errors" textFill="RED" />
-                  <Button mnemonicParsing="false" text="Clear Text" />
+                  <Label fx:id="lblNumber" text="The text contains # errors" textFill="RED" />
+                  <Button fx:id="btnClear" mnemonicParsing="false" onAction="#doClear" text="Clear Text" />
                </children>
                <VBox.margin>
                   <Insets top="10.0" />
                </VBox.margin>
             </HBox>
-            <Label text="Spell check completed in 0.002889066 seconds" />
+            <Label fx:id="lblTime" text="Spell check completed in 0.002889066 seconds" />
          </children>
          <padding>
             <Insets left="10.0" right="10.0" top="10.0" />
