@@ -66,7 +66,8 @@ public class SpellCheckerController {
     	
     	Long t1 = System.nanoTime();
     	
-    	String risultato = model.controllaTesto(txtInsert.getText());
+    	//String risultato = model.controllaTesto(txtInsert.getText());
+    	String risultato = model.controlloDicotomico(txtInsert.getText());
     	
     	Long t2 = System.nanoTime();
     	

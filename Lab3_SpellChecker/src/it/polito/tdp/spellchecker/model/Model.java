@@ -63,7 +63,7 @@ public class Model {
 		
 		for(int i = 0; i<text.length ; i++)
 			if(!dictionary.contains(text[i].replaceAll("[ \\p{Punct}]", ""))){
-				ris += text[i] + "\n";
+				ris += text[i].replaceAll("[ \\p{Punct}]", "") + "\n";
 				numeroErrori ++;
 			}
 		
@@ -87,12 +87,35 @@ public class Model {
 		
 		int inizio = 0;
 		int fine = dictionary.size() - 1;
+		boolean trovata = false;
 		
-		/*
-		for(int i = 0 ; i < testo.length() ; i++)
-			while(j== 0 || j==dictionary.size()-1)
-				if(dictionary.get(j).equals(text[i].replaceAll("[ \\p{Punct}]", "")))
-		*/
+		
+		for(int i = 0 ; i < text.length ; i++){
+			inizio = 0;
+			fine = dictionary.size() - 1;
+			trovata = false;
+			while(fine - inizio >= 1){
+				if(fine - inizio == 1){
+					if(dictionary.get(inizio).equals(text[i].replaceAll("[ \\p{Punct}]", "")) || dictionary.get(fine).equals(text[i].replaceAll("[ \\p{Punct}]", "")))
+						trovata = true;
+					break;
+					}
+				if(dictionary.get((inizio+fine)/2).equals(text[i].replaceAll("[ \\p{Punct}]", ""))){
+					trovata = true;
+					break; //parola trovata
+				}
+				if(dictionary.get((inizio+fine)/2).compareTo(text[i].replaceAll("[ \\p{Punct}]", ""))>0)
+					fine = (inizio + fine) / 2;
+				else
+					inizio = (inizio + fine) / 2;
+			}
+			if(trovata == false){
+				ris += text[i].replaceAll("[ \\p{Punct}]", "") + "\n";
+				numeroErrori ++;
+			}
+				
+		}
+		
 		return ris;
 	}
 	
