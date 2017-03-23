@@ -5,9 +5,12 @@
 package it.polito.tdp.spellchecker.controller;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import it.polito.tdp.spellchecker.model.Model;
+import it.polito.tdp.spellchecker.model.RichWord;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -57,6 +60,10 @@ public class SpellCheckerController {
     		return;
     	}
     	
+    	int numeroErrori = 0;
+    	
+    	txtResult.clear();
+    	
     	/*
     	String testo = txtInsert.getText().replaceAll("[ \\p{Punct}]", " ");
     	testo = txtInsert.getText().replaceAll(" +", " ");
@@ -66,13 +73,18 @@ public class SpellCheckerController {
     	
     	Long t1 = System.nanoTime();
     	
-    	//String risultato = model.controllaTesto(txtInsert.getText());
-    	String risultato = model.controlloDicotomico(txtInsert.getText());
+    	//List <RichWord> risultato = new ArrayList<RichWord>( model.controllaTesto(txtInsert.getText()));
+    	List <RichWord> risultato = new ArrayList <RichWord> ( model.controlloDicotomico(txtInsert.getText()));
     	
     	Long t2 = System.nanoTime();
     	
-    	txtResult.setText(risultato);
-    	lblNumber.setText("The text contains " + model.getNumeroErrori() + " errors");
+    	for(RichWord rw : risultato)
+    		if(!rw.isCorretta()){
+    			txtResult.appendText(rw.getParola() + "\n");
+    			numeroErrori ++ ;
+    		}
+    	//txtResult.setText(risultato);
+    	lblNumber.setText("The text contains " + numeroErrori + " errors");
     	lblNumber.setVisible(true);
     	
     	lblTime.setText("Spell check completed in " + ((t2-t1)/1e9) + " seconds");

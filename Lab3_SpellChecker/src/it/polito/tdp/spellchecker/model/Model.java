@@ -10,11 +10,9 @@ import java.util.List;
 public class Model {
 	
 	private List <String> dictionary;
-	private int numeroErrori;
 	
 	public Model(){
 		dictionary = new ArrayList <String>();
-		numeroErrori = 0;
 	}
 	
 	public void loadDictionary (String language){
@@ -29,7 +27,7 @@ public class Model {
 			String parola = "";
 		
 			while((parola = br.readLine())!=null){
-				dictionary.add(parola);
+				dictionary.add(parola.toLowerCase());
 			}
 			
 			br.close();
@@ -40,7 +38,7 @@ public class Model {
 		
 		
 	}
-
+	/*
 	public String controllaTesto(String testo) {
 		
 		String ris = "";
@@ -60,7 +58,7 @@ public class Model {
 				numeroErrori ++;
 			}
 		}*/
-		
+		/*
 		for(int i = 0; i<text.length ; i++)
 			if(!dictionary.contains(text[i].replaceAll("[ \\p{Punct}]", ""))){
 				ris += text[i].replaceAll("[ \\p{Punct}]", "") + "\n";
@@ -69,8 +67,28 @@ public class Model {
 		
 		return ris;
 		
-	}
+	}*/
 	
+	public List <RichWord> controllaTesto (String testo){
+		
+		List <RichWord> ris = new ArrayList <RichWord>();
+		
+		testo = testo.replaceAll(" +", " ");
+		
+		String[] text = testo.split(" ");
+		
+		String temp = "";
+		
+		for(int i = 0; i<text.length ; i++){
+			temp = text[i].toLowerCase().replaceAll("[ \\p{Punct}]", "");
+			ris.add(new RichWord (temp));
+			if(dictionary.contains(temp))
+				ris.get(i).setCorretta(true);
+		}
+		
+		return ris;
+	}
+	/*
 	public String controlloDicotomico(String testo){
 		
 		String ris = "";
@@ -118,9 +136,45 @@ public class Model {
 		
 		return ris;
 	}
-	
-	public int getNumeroErrori(){
-		return numeroErrori;
+	*/
+	public List <RichWord> controlloDicotomico(String testo){
+		
+		List <RichWord> ris = new ArrayList <RichWord>();
+		
+    	testo = testo.replaceAll(" +", " ");
+		
+		String[] text = testo.split(" ");
+		
+		Collections.sort(dictionary);
+		
+		int inizio = 0;
+		int fine = dictionary.size() - 1;
+		String temp = "";
+		
+		for(int i = 0 ; i < text.length ; i++){
+			inizio = 0;
+			fine = dictionary.size() - 1;
+			temp = text[i].replaceAll("[ \\p{Punct}]", "").toLowerCase();
+			ris.add(new RichWord(temp));
+			while(fine - inizio >= 1){
+				if(fine - inizio == 1){
+					if(dictionary.get(inizio).equals(temp) || dictionary.get(fine).equals(temp))
+						ris.get(i).setCorretta(true);
+					break;
+					}
+				if(dictionary.get((inizio+fine)/2).equals(temp)){
+					ris.get(i).setCorretta(true);
+					break;
+				}
+				if(dictionary.get((inizio+fine)/2).compareTo(temp)>0)
+					fine = (inizio + fine) / 2;
+				else
+					inizio = (inizio + fine) / 2;
+			}
+				
+		}
+		
+		return ris;
 	}
 
 }
